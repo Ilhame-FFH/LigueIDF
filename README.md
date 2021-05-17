@@ -1,1 +1,1 @@
-LigueIDF
+Ligue

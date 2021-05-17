@@ -1,0 +1,7 @@
+{
+    "name": "i.mouzouri/php-unit",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "require": {}
+}
