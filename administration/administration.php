@@ -1,6 +1,10 @@
 <?php
-include('head.php');
-
+require_once '../head.php';
+/**
+ * Administrateur.php
+ * Accès à la liste des certifications
+ * Suppresssion des certifications
+ */
 $req = 'SELECT * from ligue_idf.certification c ;';
 $result = $conn->prepare($req);
 try {
@@ -11,16 +15,16 @@ try {
 $donnees = $result->fetchAll();
 
 if (isset($_POST['delete'])) {
-	$req = 'DELETE FROM ligue_idf.`certification` WHERE id_certification= "' . $_POST['id'] . '";';
-	$result = $conn->prepare($req);
-	try {
-		$result->execute();
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-	}
+	$fichier = readdir($rep);
+
+	$repertoireDestination = 'upload/' . $v['id_certification'] . '/';
+	$fichier = readdir($repertoireDestination);
+	echo($fichier);
+	unlink('upload/' . $v['id_certification'] . '/' . $fichier);
 	header("Location: administration.php");
 }
 ?>
+
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
 		<div class="container">
@@ -32,7 +36,7 @@ if (isset($_POST['delete'])) {
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li class="active"><a href="administration.php">Certifications</a></li>
-					<li><a class="btn" href="../deconnexion.php">DECONNEXION</a></li>
+					<li><a class="btn" href="deconnexion.php">DECONNEXION</a></li>
 				</ul>
 			</div>
 		</div>
@@ -48,7 +52,7 @@ if (isset($_POST['delete'])) {
 				<header class="page-header">
 					<h1 class="page-title">Liste des certifications</h1>
 				</header>
-				<a href="ajoutFormation.php">
+				<a href="ajoutCertification.php">
 					<button type="button" class="btn btn-primary" name="ajoutFormation">Ajouter Certification</button>
 				</a>
 
@@ -100,11 +104,7 @@ if (isset($_POST['delete'])) {
 			</article>
 		</div>
 	</div>
-	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-	<script src="assets/js/headroom.min.js"></script>
-	<script src="assets/js/jQuery.headroom.min.js"></script>
-	<script src="assets/js/template.js"></script>
+<?php require_once '../footer.html'; ?>
+
 </body>
 </html>

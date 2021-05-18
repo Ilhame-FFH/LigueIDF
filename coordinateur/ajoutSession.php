@@ -1,30 +1,39 @@
 <?php
-include('head.php');
-$req = 'select * from ligue_idf.formation f ;';
+
+include('../head.php');
+$req = 'select * from ligue_idf.certification c ;';
 $result = $conn->prepare($req);
 try {
 	$result->execute();
 } catch (PDOException $e) {
 	echo $e->getMessage();
 }
-$donnees = $result->fetchAll();
+$donnees_certif = $result->fetchAll();
 $default="Aucune";
 
-if (isset($_POST["envoyer"])) {
-	$req = $conn->prepare('INSERT INTO session(libelle_session, code_session, formation_id)
-				VALUES(:libelle_session, :code_session, :formation_id)');
-	
-	$id_formation = $conn->query('SELECT id_formation from formation where libelle_formation = "' . $_POST['formation'] . '";')->fetch()['id_formation'];
+$req = 'select * from ligue_idf.saison s ;';
+$result = $conn->prepare($req);
+try {
+	$result->execute();
+} catch (PDOException $e) {
+	echo $e->getMessage();
+}
+$donnees_saisons = $result->fetchAll();
 
-	print_r($id_formation);
+if (isset($_POST["envoyer"])) {
+	$req = $conn->prepare('INSERT INTO session_certif(libelle_session, certification_id, saison_id)
+				VALUES(:libelle_session, :certification_id, :saison_id)');
+	
+	$id_certification = $conn->query('SELECT id_certification from certification where libelle_certification = "' . $_POST['certification'] . '";')->fetch()['id_certification'];
+	$id_saison = $conn->query('SELECT id_saison from saison where saison = "' . $_POST['saison'] . '";')->fetch()['id_saison'];
+
 
 	$req->execute(array(
 		'libelle_session' => $_POST['libelle_session'],
-		'code_session' => $_POST['code_session'],
-		'formation_id' => $id_formation
+		'certification_id' => $id_certification,
+		'saison_id' => $id_saison
 	));
 	header("Location: session.php");
-
 }
 ?>
 <div class="container">
@@ -36,21 +45,27 @@ if (isset($_POST["envoyer"])) {
 			<h1>Ajouter Session</h1>
 			<form method="POST">
 				<div class="form-group">
-					<label for="InputDateRencontre">Libelle Session</label>
+					<label for="InputLibelle">Libelle Session</label>
 					<input type="text" class="form-control" id="InputDateRencontre" name="libelle_session" required>
 				</div>
+
 				<div class="form-group">
-					<label for="InputHeureRencontre">Code session</label>
-					<input type="text" class="form-control" id="InputHeureRencontre" placeholder="" name="code_session" required>
-				</div>
-				<div class="form-group">
-					<label for="InputFormation">Formation associée</label>
-					<select name="formation" class="form-control">
-						<?php foreach ($donnees as $value) { ?>
-							<option value="<?= $value['libelle_formation'] ?>" <?= ($value['libelle_formation'] == $default ? 'selected="selected"' : null) ?>><?= $value['libelle_formation'] ?></option>
+					<label for="InputSaison">Saison associée</label>
+					<select name="saison" class="form-control">
+						<?php foreach ($donnees_saisons as $value) { ?>
+							<option value="<?= $value['saison'] ?>" <?= ($value['saison'] == $default ? 'selected="selected"' : null) ?>><?= $value['saison'] ?></option>
 						<?php } ?>
 					</select>
 				</div>
+				<div class="form-group">
+					<label for="InputCertification">Certification associée</label>
+					<select name="certification" class="form-control">
+						<?php foreach ($donnees_certif as $value) { ?>
+							<option value="<?= $value['libelle_certification'] ?>" <?= ($value['libelle_certification'] == $default ? 'selected="selected"' : null) ?>><?= $value['libelle_certification'] ?></option>
+						<?php } ?>
+					</select>
+				</div>
+				
 				<button type="submit" class="btn btn-primary" name="envoyer">Ajouter</button>
 				<a href="javascript:history.back()">
 					<button type="button" class="btn btn-light">Retour</button>

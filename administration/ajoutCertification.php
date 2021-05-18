@@ -1,10 +1,22 @@
 <?php
-include('head.html');
+include('../head.php');
 
-session_start();
-require_once("fonctions.php");
-$conn = connectionBD();
+/**
+ * Ajout Certificiation
+ * administration/ajoutCertification.php
+ * @package     administration
+ * @subpackage  Categories
+ * @author      Ilhame Mouzouri <i.mouzouri@ffhandball.net>
+ * @version     v.1.1 (15/05/2021)
+ * @copyright   Copyright (c) 2021
+ */
 
+
+/**
+ * Calcul de la taille d'un dossier
+ * @param <int> $name 
+ * @return type $Rep
+ */
 function TailleDossier($Rep) {
 	$Racine = opendir($Rep);
 	$Taille = 0;
@@ -19,7 +31,6 @@ function TailleDossier($Rep) {
 }
 
 if (isset($_POST["envoyer"])) {
-
 	
 	$req = $conn->prepare('INSERT INTO certification(libelle_certification, famille)
 				VALUES(:libelle_certification,:famille)');
