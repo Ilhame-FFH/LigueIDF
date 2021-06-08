@@ -4,9 +4,9 @@ include('head.html');
 if (isset($_POST['connexion'])) { // Appui sur le bouton connexion
 	if (isset($_POST['login']) && isset($_POST['mdp']) ) { // Appui sur le bouton connexion
 		if($_POST['login']=='administrateur@ffhandball.net')
-			header('Location: administration.php');
+			header('Location: administration/administration.php');
 		else{
-			header('Location: session.php');
+			header('Location: coordinateur/session.php');
 		}
 	}
 }

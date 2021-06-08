@@ -5,8 +5,17 @@ require '../vendor\autoload.php';
 use \PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use \PhpOffice\PhpSpreadsheet\Writer\Csv;
 
-/* Recuperation de l'id session */
+/**
+ * Stagiaires
+ * coordinateur/stagiaires.php
+ * @package     
+ * @subpackage  
+ * @author      Ilhame Mouzouri i.mouzouri@ffhandball.net
+ * @version     v.1.1 (15/05/2021)
+ * @copyright   Copyright (c) 2021
+ */
 
+/* Recuperation de l'id session */
 $req = 'select * from ligue_idf.session_certif s where id_session=' . $_GET['id'] . ';';
 $result = $conn->prepare($req);
 try {
@@ -29,6 +38,13 @@ try {
 }
 $stagiaires = $result_stagiaires->fetchAll();
 
+
+/**
+ * Lire fichier CSV 
+ * @param String $nom_fichier 
+ * @param String $separateur
+ * @return Object $conn
+ */
 function lire_csv($nom_fichier, $separateur = ";") {
 	$row = 0;
 	$donnee = array();
@@ -43,6 +59,21 @@ function lire_csv($nom_fichier, $separateur = ";") {
 	return $result;
 }
 
+/**
+ * Fonction connexion à la base
+ * focntions.php
+ * @package     
+ * @subpackage  
+ * @author      Ilhame Mouzouri <i.mouzouri@ffhandball.net>
+ * @version     v.1.1 (15/05/2021)
+ * @copyright   Copyright (c) 2021
+ */
+/**
+ * Requete insertion bd 
+ * @param Object $donnees_csv 
+ * @param String $table
+ * @return Object $insert
+ */
 function requete_insert($donnees_csv, $table) {
 	$insert = array();
 	$i = 0;
@@ -119,7 +150,10 @@ if (isset($_POST["import"])) {
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav pull-right">
-						<li class="active"><a href="session.php">Sessions</a></li>
+						<li><a href="session.php">Sessions</a></li>
+						<li class="active"><a href="stagiaires.php?id=<?= "".$_GET['id'] ?>">Stagiaires</a></li>
+						<li><a href="jury.php?id=<?= "".$_GET['id'] ?>">Jurys</a></li>
+						<li><a href="examens.php?id=<?= "".$_GET['id'] ?>">Examens</a></li>
 						<li><a class="btn" href="deconnexion.php">DECONNEXION</a></li>
 					</ul>
 				</div>
@@ -136,7 +170,7 @@ if (isset($_POST["import"])) {
 					</header>
 					<div class="alert alert-danger" role="alert">
 						<h1>Attention</h1> Télécharger le modele .xlsx et avant de l'importer Veuillez vous assurer que le fichier est en .xlsx et qu'il comporte les colonnes " statut, nom,	prenom,	date_naissance,	courriel, telephone, convoque_certification, resultats_certification, commentaires_certification.
-						<a href="assets/excel/Modele_excel_stagiaires.xlsx" type="application/msexcel">
+						<a href="/Ligue_IDF-master/LigueIDF/assets/excel/Modele_excel_stagiaires.xlsx" type="application/msexcel">
 							<button type="button" class="btn btn-primary" name="modeleExcel">Telecharger le modele Excel</button>
 						</a>
 					</div>
@@ -187,6 +221,8 @@ if (isset($_POST["import"])) {
 						<th scope="col">Club</th>
 						<th scope="col">Convoqué Certification</th>
 						<th scope="col">Certification</th>
+						<th scope="col">Jury 1</th>
+						<th scope="col">Jury 2</th>
 						<th scope="col">Supprimer</th>
 					</tr>
 				</thead>
@@ -207,6 +243,26 @@ if (isset($_POST["import"])) {
 							<td><?= $v['club'] ?></td>
 							<td><?= $v['convoque_certification'] ?></td>
 							<td><a style="display:inline-block;width:100%;height:100%;" href="fiche_certification.php?id=<?= "" . $v['id_stagiaire'] ?>">Fiche de certificaiton</a></td>
+
+							<td><div class="form-group">
+									<select class="form-control" id="exampleFormControlSelect1">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
+								</div></td>
+							<td><div class="form-group">
+									<select class="form-control" id="exampleFormControlSelect1">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
+								</div></td>
+
 							<td> <form action="session.php" method="POST">
 									<!--Bouton suppression d'une rencontre-->
 									<input type="submit" class="btn btn-danger" value="Supprimer" name="delete" />

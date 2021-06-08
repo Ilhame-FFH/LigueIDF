@@ -1,9 +1,16 @@
 <?php
 require_once '../head.php';
+
 /**
- * Administrateur.php
+ * Gestion Administration
+ * administration/administrateur.php
  * Accès à la liste des certifications
  * Suppresssion des certifications
+ * @package     administration
+ * @subpackage  Categories
+ * @author      Ilhame Mouzouri <i.mouzouri@ffhandball.net>
+ * @version     v.1.1 (15/05/2021)
+ * @copyright   Copyright (c) 2021
  */
 $req = 'SELECT * from ligue_idf.certification c ;';
 $result = $conn->prepare($req);

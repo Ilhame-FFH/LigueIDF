@@ -11,7 +11,7 @@
  *
  * @author i.mouzouri
  */
-require_once '..\..\Calculator.php';
+require_once '/LigueIDF/phpUnit/Calculator.php';
 class CalculatorTest extends PHPUnit_Framework_TestCase {
 
 	/**

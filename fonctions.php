@@ -1,7 +1,11 @@
 <?php
 
-/* Fonction connexion à la base */
 
+/**
+ * Connexion à la base
+ * @param String $dbname 
+ * @return Object $conn
+ */
 function connectionBD($dbname = 'ligue_idf') {
 	/* Connexion BDD */
 	$servername = 'localhost';
@@ -16,9 +20,6 @@ function connectionBD($dbname = 'ligue_idf') {
 	} catch (PDOException $e) {
 		echo "Erreur : " . $e->getMessage();
 	}
-
 	return $conn;
 }
-
-
 ?>
