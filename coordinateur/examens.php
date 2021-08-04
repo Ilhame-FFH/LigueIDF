@@ -6,8 +6,8 @@ use \PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use \PhpOffice\PhpSpreadsheet\Writer\Csv;
 
 /**
- * Stagiaires
- * coordinateur/stagiaires.php
+ * Examens
+ * coordinateur/examens.php
  * @package     
  * @subpackage  
  * @author      Ilhame Mouzouri i.mouzouri@ffhandball.net
@@ -25,11 +25,10 @@ try {
 }
 $donnees = $result->fetchAll();
 foreach ($donnees as $value) {
-	
 }
 
 /* Recuperation des stagiaires */
-$req_stagiaires = 'select * from ligue_idf.stagiaire s where s.session_certif_id = "' . $_GET['id'] . '";';
+$req_stagiaires = 'select s.nom, s.prenom, s.id_stagiaire,j.statut, j.nom as Jnom, s.date_examen, s.horaire_examen from ligue_idf.jury j, stagiaire s where j.id_jury=s.jury1_id and j.session_certif_id = "' . $_GET['id'] . '";';
 $result_stagiaires = $conn->prepare($req_stagiaires);
 try {
 	$result_stagiaires->execute();
@@ -38,6 +37,27 @@ try {
 }
 $stagiaires = $result_stagiaires->fetchAll();
 
+/* Recuperation du jury 1 */
+$req_jury1 = 'select j.nom from ligue_idf.jury j, stagiaire s where j.id_jury=s.jury1_id and j.session_certif_id = "' . $_GET['id'] . '";';
+$result_jury1 = $conn->prepare($req_jury1);
+try {
+	$result_jury1->execute();
+} catch (PDOException $e) {
+	echo $e->getMessage();
+}
+$jury1 = $result_jury1->fetchAll();
+foreach ($jury1 as $value2) {
+	
+}
+/* Recuperation du jury 2 */
+$req_jury2 = 'select * from ligue_idf.jury j, stagiaire s where j.id_jury=s.jury2_id and j.session_certif_id = "' . $_GET['id'] . '";';
+$result_jury2 = $conn->prepare($req_jury2);
+try {
+	$result_jury2->execute();
+} catch (PDOException $e) {
+	echo $e->getMessage();
+}
+$jury2 = $result_jury2->fetchAll();
 
 /**
  * Lire fichier CSV 
@@ -140,6 +160,7 @@ if (isset($_POST["import"])) {
 ?>
 <html>
 	<body>
+
 		<!-- Fixed navbar -->	
 		<div class="navbar navbar-inverse navbar-fixed-top headroom" >
 			<div class="container">
@@ -154,12 +175,12 @@ if (isset($_POST["import"])) {
 						<li><a href="stagiaires.php?id=<?= "".$_GET['id'] ?>">Stagiaires</a></li>
 						<li><a href="jury.php?id=<?= "".$_GET['id'] ?>">Jurys</a></li>
 						<li class="active"><a href="examens.php?id=<?= "".$_GET['id'] ?>">Examens</a></li>
-						<li><a class="btn" href="deconnexion.php">DECONNEXION</a></li>
+						<li><a class="btn" href="../deconnexion.php">DECONNEXION</a></li>
 					</ul>
 				</div>
 			</div>
-		</div> 
-
+		</div>
+		
 		<header id="head" class="secondary"></header>
 
 		<div class="container">
@@ -172,9 +193,9 @@ if (isset($_POST["import"])) {
 					<?php $id=$_GET['id'];?>
 					<a href="ajoutExamen.php?id=<?= "".$id ?>">
 						<button type="button" class="btn btn-primary" name="ajoutExamen">Ajouter Association </button>
-					</a>
+						<button type="button" class="btn btn-primary" name="">Exporter </button>
 
-					
+					</a>
 			</div>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
@@ -187,6 +208,12 @@ if (isset($_POST["import"])) {
 						<th scope="col">Prenom</th>
 						<th scope="col">Jury 1</th>
 						<th scope="col">Jury 2</th>
+						<th scope="col">Date Examen</th>
+						<th scope="col">Horaire Examen</th>
+						<th scope="col">Adresse</th>
+						<th scope="col">Lieu</th>
+						<th scope="col">Consigne jury</th>
+						<th scope="col">Consigne Stagiaire</th>
 						<th scope="col">Certification</th>
 						<th scope="col">Supprimer</th>
 					</tr>
@@ -198,28 +225,16 @@ if (isset($_POST["import"])) {
 							<td><?= $v['id_stagiaire'] ?></td>
 							<td><?= $v['nom'] ?></td>
 							<td><?= $v['prenom'] ?></td>
-							<td><?= $v['jury1'] ?></td>
-							<td><?= $v['jury2'] ?></td>
-							<td><a style="display:inline-block;width:100%;height:100%;" href="fiche_certification.php?id=<?= "" . $v['id_stagiaire'] ?>">Fiche de certificaiton</a></td>
+							<td><?= $v['Jnom'] ?></td>
+							<td><?= $v['Jnom'] ?></td>
+							<td><?= $v['date_examen'] ?></td>
+							<td><?= $v['horaire_examen'] ?></td>
+							<td><?= $v['horaire_examen'] ?></td>
+							<td><?= $v['horaire_examen'] ?></td>
+							<td>Arriver 30min avant</td>
+							<td>Apporter fiche certif</td>
 
-							<td><div class="form-group">
-									<select class="form-control" id="exampleFormControlSelect1">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-								</div></td>
-							<td><div class="form-group">
-									<select class="form-control" id="exampleFormControlSelect1">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-								</div></td>
+							<td><a style="display:inline-block;width:100%;height:100%;" href="fiche_certification.php?id=<?= "" . $v['id_stagiaire'] ?>">Fiche de certificaiton</a></td>
 
 							<td> <form action="session.php" method="POST">
 									<!--Bouton suppression d'une rencontre-->
@@ -227,7 +242,8 @@ if (isset($_POST["import"])) {
 									<input type="hidden" value="<?= $v['id_session'] ?>" name="id" />
 								</form></td>
 						</tr>
-					<?php } ?>
+						<?php } ?>
+
 				</tbody>
 			</table>
 		</article>

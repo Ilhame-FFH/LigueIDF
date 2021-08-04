@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Ajout Session
+ * coordinateur/ajoutSession.php
+ * @package     coordinateur
+ * @subpackage  Categories
+ * @author      Ilhame Mouzouri <i.mouzouri@ffhandball.net>
+ * @version     v.1.1 (15/06/2021)
+ * @copyright   Copyright (c) 2021
+ */
 include('../head.php');
 $req = 'select * from ligue_idf.certification c ;';
 $result = $conn->prepare($req);
@@ -36,6 +44,9 @@ if (isset($_POST["envoyer"])) {
 	header("Location: session.php");
 }
 ?>
+
+<!-- Formulaire d'ajout d'une session -->
+
 <div class="container">
 
 	<div class="row">

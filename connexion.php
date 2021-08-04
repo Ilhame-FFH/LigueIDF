@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Connexion
+ * connexion.php
+ * @package     
+ * @subpackage  
+ * @author      Ilhame Mouzouri i.mouzouri@ffhandball.net
+ * @version     v.1.1 (15/05/2021)
+ * @copyright   Copyright (c) 2021
+ */
+
 include('head.html');
 
 if (isset($_POST['connexion'])) { // Appui sur le bouton connexion

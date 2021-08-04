@@ -6,12 +6,15 @@ use \PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use \PhpOffice\PhpSpreadsheet\Writer\Csv;
 
 /**
- * Stagiaires
- * coordinateur/stagiaires.php
+ * Jurys
+ * coordinateur/jurys.php
+ * Telecharger modele 
+ * Import via un fichier excel
+ * Ajouter stagiaire
  * @package     
  * @subpackage  
  * @author      Ilhame Mouzouri i.mouzouri@ffhandball.net
- * @version     v.1.1 (15/05/2021)
+ * @version     v.1.1 (15/06/2021)
  * @copyright   Copyright (c) 2021
  */
 
@@ -147,7 +150,7 @@ if (isset($_POST["import"])) {
 						<li ><a href="stagiaires.php?id=<?= "".$_GET['id'] ?>">Stagiaires</a></li>
 						<li class="active"><a href="jury.php?id=<?= "".$_GET['id'] ?>">Jurys</a></li>
 						<li><a href="examens.php?id=<?= "".$_GET['id'] ?>">Examens</a></li>
-						<li><a class="btn" href="deconnexion.php">DECONNEXION</a></li>
+						<li><a class="btn" href="../deconnexion.php">DECONNEXION</a></li>
 					</ul>
 				</div>
 			</div>

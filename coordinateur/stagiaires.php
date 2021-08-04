@@ -154,7 +154,7 @@ if (isset($_POST["import"])) {
 						<li class="active"><a href="stagiaires.php?id=<?= "".$_GET['id'] ?>">Stagiaires</a></li>
 						<li><a href="jury.php?id=<?= "".$_GET['id'] ?>">Jurys</a></li>
 						<li><a href="examens.php?id=<?= "".$_GET['id'] ?>">Examens</a></li>
-						<li><a class="btn" href="deconnexion.php">DECONNEXION</a></li>
+						<li><a class="btn" href="../deconnexion.php">DECONNEXION</a></li>
 					</ul>
 				</div>
 			</div>
@@ -219,10 +219,6 @@ if (isset($_POST["import"])) {
 						<th scope="col">Courriel</th>
 						<th scope="col">Comité</th>
 						<th scope="col">Club</th>
-						<th scope="col">Convoqué Certification</th>
-						<th scope="col">Certification</th>
-						<th scope="col">Jury 1</th>
-						<th scope="col">Jury 2</th>
 						<th scope="col">Supprimer</th>
 					</tr>
 				</thead>
@@ -241,28 +237,7 @@ if (isset($_POST["import"])) {
 							<td><?= $v['telephone'] ?></td>
 							<td><?= $v['comite'] ?></td>
 							<td><?= $v['club'] ?></td>
-							<td><?= $v['convoque_certification'] ?></td>
-							<td><a style="display:inline-block;width:100%;height:100%;" href="fiche_certification.php?id=<?= "" . $v['id_stagiaire'] ?>">Fiche de certificaiton</a></td>
-
-							<td><div class="form-group">
-									<select class="form-control" id="exampleFormControlSelect1">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-								</div></td>
-							<td><div class="form-group">
-									<select class="form-control" id="exampleFormControlSelect1">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
-								</div></td>
-
+							
 							<td> <form action="session.php" method="POST">
 									<!--Bouton suppression d'une rencontre-->
 									<input type="submit" class="btn btn-danger" value="Supprimer" name="delete" />

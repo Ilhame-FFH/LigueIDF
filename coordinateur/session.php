@@ -38,7 +38,7 @@ if (isset($_POST['delete'])) {
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li class="active"><a href="session.php">Sessions</a></li>
-					<li><a class="btn" href="deconnexion.php">DECONNEXION</a></li>
+					<li><a class="btn" href="../deconnexion.php">DECONNEXION</a></li>
 				</ul>
 			</div>
 		</div>

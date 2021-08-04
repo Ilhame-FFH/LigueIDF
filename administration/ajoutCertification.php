@@ -59,6 +59,7 @@ if (isset($_POST["envoyer"])) {
 	header("Location: administration.php");
 }
 ?>
+<!-- Formulaire d'ajout d'une certification -->
 
 <div class="container">
 	<div class="row">

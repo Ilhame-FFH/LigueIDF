@@ -3,7 +3,7 @@ require_once '../head.php';
 
 /**
  * Gestion Administration
- * administration/administrateur.php
+ * administration/administration.php
  * Accès à la liste des certifications
  * Suppresssion des certifications
  * @package     administration
@@ -43,7 +43,7 @@ if (isset($_POST['delete'])) {
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li class="active"><a href="administration.php">Certifications</a></li>
-					<li><a class="btn" href="deconnexion.php">DECONNEXION</a></li>
+					<li><a class="btn" href="../deconnexion.php">DECONNEXION</a></li>
 				</ul>
 			</div>
 		</div>
